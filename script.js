@@ -108,7 +108,7 @@ const auras = [
 ];
 
 /* =========================
-   SCORE
+   SCORE GENERATOR
 ========================= */
 
 function generateBond(name1,name2){
@@ -355,24 +355,67 @@ function checkBond(){
 }
 
 /* =========================
-   SAVE RESULT
+   SHARE / SAVE RESULT
 ========================= */
 
-function saveResult(){
+async function saveResult(){
 
-  html2canvas(document.querySelector(".card"))
-  .then(canvas => {
+  const canvas =
+  await html2canvas(
+    document.querySelector(".card")
+  );
 
-    const link =
-    document.createElement("a");
+  canvas.toBlob(async(blob)=>{
 
-    link.download =
-    "bondsync-result.png";
+    const file =
+    new File(
+      [blob],
+      "bondsync-result.png",
+      { type:"image/png" }
+    );
 
-    link.href =
-    canvas.toDataURL();
+    /* MOBILE NATIVE SHARE */
 
-    link.click();
+    if(
+      navigator.canShare &&
+      navigator.canShare({
+        files:[file]
+      })
+    ){
+
+      try{
+
+        await navigator.share({
+
+          title:"bond.sync ✨",
+
+          text:
+          "Our friendship bond broke reality ♾️",
+
+          files:[file]
+
+        });
+
+      }catch(error){
+
+        console.log(error);
+      }
+
+    }else{
+
+      /* FALLBACK DOWNLOAD */
+
+      const link =
+      document.createElement("a");
+
+      link.download =
+      "bondsync-result.png";
+
+      link.href =
+      URL.createObjectURL(blob);
+
+      link.click();
+    }
 
   });
 
