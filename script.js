@@ -129,7 +129,7 @@ function generateBond(name1,name2){
 }
 
 /* =========================
-   EMOJIS
+   FLOATING EMOJIS
 ========================= */
 
 function createEmoji(){
@@ -163,14 +163,18 @@ function createEmoji(){
    ONLINE USERS
 ========================= */
 
-setInterval(()=>{
+function updateOnlineUsers(){
 
   document.getElementById(
     "onlineUsers"
   ).innerText =
   Math.floor(Math.random()*20)+8;
 
-},4000);
+}
+
+updateOnlineUsers();
+
+setInterval(updateOnlineUsers,4000);
 
 /* =========================
    REAL VISITOR COUNT
@@ -186,15 +190,20 @@ async function updateVisitorCount(){
     const data =
     await response.json();
 
+    console.log(data);
+
     document.getElementById(
       "visitCount"
-    ).innerText = data.visits;
+    ).innerText =
+    data.visits || 0;
 
   }catch(error){
 
+    console.log(error);
+
     document.getElementById(
       "visitCount"
-    ).innerText = "∞";
+    ).innerText = "0";
 
   }
 
@@ -241,13 +250,13 @@ function checkBond(){
 
   result.querySelector(".result-text").innerHTML = `
 
-  ✨ Analyzing friendship memories...<br>
+    ✨ Analyzing friendship memories...<br>
 
-  📂 Scanning emotional damage...<br>
+    📂 Scanning emotional damage...<br>
 
-  💀 Detecting meme compatibility...<br>
+    💀 Detecting meme compatibility...<br>
 
-  ♾️ Calculating infinity levels...
+    ♾️ Calculating infinity levels...
 
   `;
 
@@ -323,7 +332,7 @@ function checkBond(){
 
     }
 
-    /* DYNAMIC BG */
+    /* DYNAMIC BACKGROUND */
 
     if(percentage >= 95){
 
