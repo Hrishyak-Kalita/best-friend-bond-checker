@@ -10,7 +10,8 @@ export default async function handler(req, res) {
     let visits =
     await redis.get("visits");
 
-    visits = Number(visits || 0);
+    visits =
+    Number(visits || 0);
 
     visits++;
 
@@ -20,10 +21,12 @@ export default async function handler(req, res) {
     );
 
     return res.status(200).json({
-      visits: visits
+      visits
     });
 
   } catch (error) {
+
+    console.error(error);
 
     return res.status(500).json({
       visits: 0,

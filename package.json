@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@upstash/redis": "^1.38.0",
-    "@vercel/kv": "^3.0.0"
+    "@vercel/kv": "^3.0.0",
+    "vercel": "^54.9.1"
   }
 }
