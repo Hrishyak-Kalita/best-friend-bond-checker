@@ -66,13 +66,6 @@ document.addEventListener("mousemove",(e)=>{
 
 });
 
-document.addEventListener("mouseleave",()=>{
-
-  card.style.transform =
-  "rotateY(0deg) rotateX(0deg)";
-
-});
-
 /* =========================
    RESPONSES
 ========================= */
@@ -81,15 +74,15 @@ const responses = [
 
 "⚠️ SYSTEM OVERLOAD: Too much friendship energy detected.",
 
-"♾️ Bond level currently expanding beyond infinity...",
+"♾️ Bond level expanding beyond infinity...",
 
-"💖 Friendship stronger than emotional damage & bad decisions.",
+"💖 Friendship stronger than emotional damage.",
 
-"😂 Built entirely on memes, chaos & inside jokes.",
+"😂 Built entirely on memes & inside jokes.",
 
-"🫂 Emotional support humans detected successfully.",
+"🫂 Emotional support humans detected.",
 
-"🚀 This bond survived mood swings & dry replies.",
+"🚀 This bond survived dry replies & mood swings.",
 
 "🌌 Cosmic friendship unlocked successfully.",
 
@@ -115,7 +108,7 @@ const auras = [
 ];
 
 /* =========================
-   NAME BASED SCORE
+   SCORE
 ========================= */
 
 function generateBond(name1,name2){
@@ -136,32 +129,48 @@ function generateBond(name1,name2){
 }
 
 /* =========================
-   HEART EFFECT
+   EMOJIS
 ========================= */
 
-function createHeart(){
+function createEmoji(){
 
-  const heart =
+  const emojis =
+  ["💖","✨","🌌","😂","♾️"];
+
+  const emoji =
   document.createElement("div");
 
-  heart.classList.add("heart");
+  emoji.classList.add("float-emoji");
 
-  heart.innerHTML = "💖";
+  emoji.innerHTML =
+  emojis[Math.floor(Math.random()*emojis.length)];
 
-  heart.style.left =
+  emoji.style.left =
   Math.random() * window.innerWidth + "px";
 
-  heart.style.bottom = "0px";
+  emoji.style.bottom = "0px";
 
-  document.body.appendChild(heart);
+  document.body.appendChild(emoji);
 
   setTimeout(()=>{
 
-    heart.remove();
+    emoji.remove();
 
   },3000);
 }
 
+/* =========================
+   ONLINE USERS
+========================= */
+
+setInterval(()=>{
+
+  document.getElementById(
+    "onlineUsers"
+  ).innerText =
+  Math.floor(Math.random()*20)+8;
+
+},4000);
 
 /* =========================
    REAL VISITOR COUNT
@@ -193,8 +202,6 @@ async function updateVisitorCount(){
 
 updateVisitorCount();
 
-
-
 /* =========================
    MAIN FUNCTION
 ========================= */
@@ -214,9 +221,15 @@ function checkBond(){
   const result =
   document.getElementById("result");
 
+  const percentageText =
+  document.getElementById("percentage");
+
+  const progressBar =
+  document.getElementById("progressBar");
+
   if(name1 === "" || name2 === ""){
 
-    result.innerHTML =
+    result.querySelector(".result-text").innerHTML =
     "🥺 Please enter both names first.";
 
     return;
@@ -224,19 +237,17 @@ function checkBond(){
 
   result.classList.add("loading");
 
-  result.innerHTML = `
+  percentageText.innerHTML = "⌛";
 
-  <div>
+  result.querySelector(".result-text").innerHTML = `
 
-    ✨ Analyzing friendship memories...<br>
+  ✨ Analyzing friendship memories...<br>
 
-    📂 Scanning emotional damage...<br>
+  📂 Scanning emotional damage...<br>
 
-    💀 Detecting meme compatibility...<br>
+  💀 Detecting meme compatibility...<br>
 
-    ♾️ Calculating infinity levels...
-
-  </div>
+  ♾️ Calculating infinity levels...
 
   `;
 
@@ -250,24 +261,33 @@ function checkBond(){
     const response =
     responses[
       Math.floor(
-        Math.random() * responses.length
+        Math.random()*responses.length
       )
     ];
 
     const aura =
     auras[
       Math.floor(
-        Math.random() * auras.length
+        Math.random()*auras.length
       )
     ];
 
-    result.innerHTML = `
+    percentageText.innerHTML =
+    `${percentage}%`;
 
-    <div>
+    const radius = 65;
 
-      <div class="bond-percent">
-        ${percentage}%
-      </div>
+    const circumference =
+    2 * Math.PI * radius;
+
+    const offset =
+    circumference -
+    (percentage / 100) * circumference;
+
+    progressBar.style.strokeDashoffset =
+    offset;
+
+    result.querySelector(".result-text").innerHTML = `
 
       <div class="aura">
         ${aura}
@@ -291,20 +311,61 @@ function checkBond(){
 
       </div>
 
-    </div>
-
     `;
 
     for(let i=0;i<18;i++){
 
       setTimeout(()=>{
 
-        createHeart();
+        createEmoji();
 
       },i*120);
 
     }
 
+    /* DYNAMIC BG */
+
+    if(percentage >= 95){
+
+      document.body.style.background =
+      "linear-gradient(135deg,#ff0080,#7928ca,#00d4ff)";
+
+    }else if(percentage >= 85){
+
+      document.body.style.background =
+      "linear-gradient(135deg,#7c4dff,#00d4ff,#111827)";
+
+    }else{
+
+      document.body.style.background =
+      "linear-gradient(135deg,#111827,#0f172a,#070710)";
+    }
+
   },2500);
+
+}
+
+/* =========================
+   SAVE RESULT
+========================= */
+
+function saveResult(){
+
+  html2canvas(document.querySelector(".card"))
+  .then(canvas => {
+
+    const link =
+    document.createElement("a");
+
+    link.download =
+    "bondsync-result.png";
+
+    link.href =
+    canvas.toDataURL();
+
+    link.click();
+
+  });
+
 }
 

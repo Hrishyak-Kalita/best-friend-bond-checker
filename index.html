@@ -11,7 +11,7 @@
     content="width=device-width, initial-scale=1.0"
   />
 
-  <title>Infinity Bond Checker ✨</title>
+  <title>bond.sync ✨</title>
 
   <link rel="stylesheet" href="style.css">
 
@@ -20,6 +20,9 @@
     rel="stylesheet"
   >
 
+  <!-- SCREENSHOT LIBRARY -->
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
 </head>
 
 <body>
@@ -27,7 +30,7 @@
   <!-- STARS -->
   <div class="stars" id="stars"></div>
 
-  <!-- GLOW ORBS -->
+  <!-- ORBS -->
   <div class="orb orb1"></div>
   <div class="orb orb2"></div>
   <div class="orb orb3"></div>
@@ -38,10 +41,10 @@
   <!-- MAIN CARD -->
   <div class="card" id="card">
 
-    <h1>💖 Bond Checker</h1>
+    <h1>✨ bond.sync</h1>
 
     <p class="subtitle">
-      Some friendships are too powerful for reality to process ✨
+      Some friendships are too powerful for reality ♾️
     </p>
 
     <div class="input-box">
@@ -66,17 +69,66 @@
 
     <!-- RESULT -->
     <div class="result" id="result">
-      Your friendship aura will appear here 💫
+
+      <div>
+
+        <div class="circle-wrap">
+
+          <svg class="progress-ring" width="150" height="150">
+
+            <circle
+              class="progress-bg"
+              cx="75"
+              cy="75"
+              r="65"
+            />
+
+            <circle
+              class="progress-bar"
+              id="progressBar"
+              cx="75"
+              cy="75"
+              r="65"
+            />
+
+          </svg>
+
+          <div class="percentage" id="percentage">
+            ♾️
+          </div>
+
+        </div>
+
+        <div class="result-text">
+          Your friendship aura will appear here 💫
+        </div>
+
+      </div>
+
     </div>
 
-    <!-- VISIT COUNT -->
+    <!-- ACTIONS -->
+    <div class="actions">
+
+      <button class="secondary-btn" onclick="saveResult()">
+        📸 Save Result
+      </button>
+
+    </div>
+
+    <!-- LIVE USERS -->
+    <div class="online-box">
+      🌍 <span id="onlineUsers">12</span> people syncing bonds now
+    </div>
+
+    <!-- VISITS -->
     <div class="visit-box">
       👀 Visitors:
       <span id="visitCount">0</span>
     </div>
 
     <div class="footer">
-      Happy Best Friend Day 🌸
+      Made with chaos, memes & emotional damage 💖
     </div>
 
   </div>
