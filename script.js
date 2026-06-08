@@ -177,7 +177,7 @@ updateOnlineUsers();
 setInterval(updateOnlineUsers,4000);
 
 /* =========================
-   REAL VISITOR COUNT
+   VISITOR COUNT
 ========================= */
 
 async function updateVisitorCount(){
@@ -189,8 +189,6 @@ async function updateVisitorCount(){
 
     const data =
     await response.json();
-
-    console.log(data);
 
     document.getElementById(
       "visitCount"
@@ -266,6 +264,26 @@ function checkBond(){
 
     const percentage =
     generateBond(name1,name2);
+
+    /* SAVE TO REDIS */
+
+    fetch("/api/count",{
+
+      method:"POST",
+
+      headers:{
+        "Content-Type":"application/json"
+      },
+
+      body:JSON.stringify({
+
+        name1,
+        name2,
+        score:percentage
+
+      })
+
+    });
 
     const response =
     responses[
@@ -374,8 +392,6 @@ async function saveResult(){
       { type:"image/png" }
     );
 
-    /* MOBILE NATIVE SHARE */
-
     if(
       navigator.canShare &&
       navigator.canShare({
@@ -402,8 +418,6 @@ async function saveResult(){
       }
 
     }else{
-
-      /* FALLBACK DOWNLOAD */
 
       const link =
       document.createElement("a");
