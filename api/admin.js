@@ -1,17 +1,22 @@
 
 import { Redis } from "@upstash/redis";
 
-const redis = Redis.fromEnv();
+const redis = new Redis({
+
+  url: process.env.KV_REST_API_URL,
+
+  token: process.env.KV_REST_API_TOKEN
+
+});
 
 export default async function handler(req, res) {
 
-  const secret =
-  req.query.secret;
+  const key =
+  req.query.key;
 
-  const ADMIN_SECRET =
-  process.env.ADMIN_SECRET;
+  /* SIMPLE ADMIN SECRET */
 
-  if(secret !== ADMIN_SECRET){
+  if(key !== "hrishadmin"){
 
     return res.status(401).json({
       error:"Unauthorized"
@@ -30,10 +35,7 @@ export default async function handler(req, res) {
     return res.status(200).json({
 
       totalVisitors:
-      visits || 0,
-
-      totalRecentBonds:
-      recentBonds?.length || 0,
+      Number(visits || 0),
 
       recentBonds:
       recentBonds || []
@@ -42,12 +44,13 @@ export default async function handler(req, res) {
 
   }catch(error){
 
+    console.log(error);
+
     return res.status(500).json({
-
       error:error.message
-
     });
 
   }
 
 }
+

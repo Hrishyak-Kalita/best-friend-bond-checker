@@ -1,31 +1,45 @@
 
 import { Redis } from "@upstash/redis";
 
-const redis = Redis.fromEnv();
+const redis = new Redis({
+
+  url: process.env.KV_REST_API_URL,
+
+  token: process.env.KV_REST_API_TOKEN
+
+});
 
 export default async function handler(req, res) {
 
-  try {
+  try{
 
     /* =========================
        VISITOR COUNT
     ========================= */
 
-    let visits =
-    await redis.get("visits");
+    if(req.method === "GET"){
 
-    visits =
-    Number(visits || 0);
+      let visits =
+      await redis.get("visits");
 
-    visits++;
+      visits =
+      Number(visits || 0);
 
-    await redis.set(
-      "visits",
-      visits
-    );
+      visits++;
+
+      await redis.set(
+        "visits",
+        visits
+      );
+
+      return res.status(200).json({
+        visits
+      });
+
+    }
 
     /* =========================
-       STORE RECENT BONDS
+       SAVE BOND
     ========================= */
 
     if(req.method === "POST"){
@@ -33,54 +47,50 @@ export default async function handler(req, res) {
       const body =
       req.body;
 
-      let recent =
+      let recentBonds =
       await redis.get("recentBonds");
 
-      if(!Array.isArray(recent)){
+      if(!Array.isArray(recentBonds)){
 
-        recent = [];
+        recentBonds = [];
       }
 
-      recent.unshift({
+      recentBonds.unshift({
 
-        name1:
-        body.name1?.slice(0,15),
+        name1: body.name1,
 
-        name2:
-        body.name2?.slice(0,15),
+        name2: body.name2,
 
-        score:
-        body.score,
+        score: body.score,
 
-        time:
-        Date.now()
+        time: Date.now()
 
       });
 
-      recent =
-      recent.slice(0,20);
+      recentBonds =
+      recentBonds.slice(0,20);
 
       await redis.set(
         "recentBonds",
-        recent
+        recentBonds
       );
+
+      return res.status(200).json({
+        success:true
+      });
 
     }
 
-    return res.status(200).json({
-      visits
+    return res.status(405).json({
+      error:"Method not allowed"
     });
 
-  } catch (error) {
+  }catch(error){
 
-    console.error(error);
+    console.log(error);
 
     return res.status(500).json({
-
-      visits:0,
-
       error:error.message
-
     });
 
   }

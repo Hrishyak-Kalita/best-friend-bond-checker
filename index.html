@@ -1,97 +1,287 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
 
-    <title>bond.sync ✨</title>
+  <meta charset="UTF-8" />
 
-    <link rel="stylesheet" href="style.css" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+  <title>bond.sync ✨</title>
 
-    <!-- SCREENSHOT LIBRARY -->
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-  </head>
+  <link
+    rel="stylesheet"
+    href="style.css"
+  />
 
-  <body>
-    <!-- STARS -->
-    <div class="stars" id="stars"></div>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
 
-    <!-- ORBS -->
-    <div class="orb orb1"></div>
-    <div class="orb orb2"></div>
-    <div class="orb orb3"></div>
+</head>
 
-    <!-- CURSOR -->
-    <div class="cursor" id="cursor"></div>
+<body>
 
-    <!-- MAIN CARD -->
-    <div class="card" id="card">
-      <h1>✨ bond.sync</h1>
+  <div id="stars"></div>
 
-      <p class="subtitle">Some friendships are too powerful for reality ♾️</p>
+  <div id="cursor"></div>
 
-      <div class="input-box">
-        <input type="text" id="name1" placeholder="Enter First Name" />
+  <div class="container">
+
+    <div
+      class="card"
+      id="card"
+    >
+
+      <div class="brand-tag">
+        made for beautiful friendships ✨
       </div>
 
-      <div class="input-box">
-        <input type="text" id="name2" placeholder="Enter Best Friend Name" />
+      <h1 class="title">
+        bond.sync
+      </h1>
+
+      <p class="subtitle">
+
+        Some friendships just feel different ✨
+
+        <br><br>
+
+        Let's discover the vibe of yours 💖
+
+      </p>
+
+      <div class="input-group">
+
+        <input
+          type="text"
+          id="name1"
+          placeholder="Your Name ✨"
+        >
+
+        <input
+          type="text"
+          id="name2"
+          placeholder="Your Duo 🌙"
+        >
+
       </div>
 
-      <button onclick="checkBond()">Analyze Friendship Energy ✨</button>
+      <div class="upload-section">
 
-      <!-- RESULT -->
-      <div class="result" id="result">
-        <div>
-          <div class="circle-wrap">
-            <svg class="progress-ring" width="150" height="150">
-              <circle class="progress-bg" cx="75" cy="75" r="65" />
+        <label class="upload-box">
 
-              <circle
-                class="progress-bar"
-                id="progressBar"
-                cx="75"
-                cy="75"
-                r="65"
-              />
-            </svg>
+          <input
+            type="file"
+            id="photo1"
+            accept="image/*"
+            hidden
+          >
 
-            <div class="percentage" id="percentage">♾️</div>
+          <span id="uploadText1">
+            Add Your Energy 📸
+          </span>
+
+        </label>
+
+        <label class="upload-box">
+
+          <input
+            type="file"
+            id="photo2"
+            accept="image/*"
+            hidden
+          >
+
+          <span id="uploadText2">
+            Through Your Eyes 💫
+          </span>
+
+        </label>
+
+      </div>
+
+      <button
+        class="main-btn"
+        onclick="checkBond()"
+      >
+        Sync Our Bond ✨
+      </button>
+
+      <div
+        class="result"
+        id="result"
+      >
+
+        <div class="photo-preview">
+
+          <img id="preview1">
+
+          <div class="preview-heart">
+            ✨
           </div>
 
-          <div class="result-text">
-            Your friendship aura will appear here 💫
-          </div>
+          <img id="preview2">
+
         </div>
+
+        <div class="circle-wrap">
+
+          <svg
+            class="progress-ring"
+            width="150"
+            height="150"
+          >
+
+            <circle
+              class="progress-bg"
+              cx="75"
+              cy="75"
+              r="65"
+            />
+
+            <circle
+              class="progress-bar"
+              id="progressBar"
+              cx="75"
+              cy="75"
+              r="65"
+            />
+
+          </svg>
+
+          <div
+            class="percentage"
+            id="percentage"
+          >
+            0%
+          </div>
+
+        </div>
+
+        <div class="vibe-text">
+          friendship vibe detected ✨
+        </div>
+
+        <div class="result-text">
+
+          Your friendship story
+          will appear here 💖
+
+        </div>
+
       </div>
 
-      <!-- ACTIONS -->
-      <div class="actions">
-        <button class="secondary-btn" onclick="saveResult()">
-          ✨ Sync & Share
+      <div
+        class="actions"
+        id="shareActions"
+      >
+
+        <button
+          class="secondary-btn"
+          onclick="saveResult()"
+        >
+          Share Our Vibe 💫
         </button>
+
       </div>
 
-      <!-- LIVE USERS -->
       <div class="online-box">
-        🌍 <span id="onlineUsers">12</span> people syncing bonds now
+
+        👀 Online Now:
+        <span id="onlineUsers">
+          12
+        </span>
+
+        <br><br>
+
+        🌍 Total Visitors:
+        <span id="visitCount">
+          0
+        </span>
+
       </div>
 
-      <!-- VISITS -->
-      <div class="visit-box">
-        👀 Visitors:
-        <span id="visitCount">0</span>
-      </div>
-
-      <div class="footer">Made with chaos, memes & emotional damage 💖</div>
     </div>
 
-    <script src="script.js"></script>
-  </body>
+  </div>
+
+  <!-- =========================
+       INSTAGRAM STORY CARD
+  ========================= -->
+
+  <div id="storyCard">
+
+    <div class="story-brand">
+      bond.sync ✨
+    </div>
+
+    <div class="story-photos">
+
+      <img id="storyImg1">
+
+      <div class="story-heart">
+        ✨
+      </div>
+
+      <img id="storyImg2">
+
+    </div>
+
+    <div
+      class="story-score"
+      id="storyScore"
+    >
+      94%
+    </div>
+
+    <div
+      class="story-type"
+      id="storyType"
+    >
+      Late Night Comfort Duo 🌙
+    </div>
+
+    <div
+      class="story-quote"
+      id="storyQuote"
+    >
+      Some friendships naturally become a safe place 💖
+    </div>
+
+    <div class="story-stats">
+
+      💬 Comfort:
+      <span id="storyComfort">
+        91%
+      </span>
+
+      <br>
+
+      🌙 Emotional Sync:
+      <span id="storySync">
+        92%
+      </span>
+
+      <br>
+
+      😂 Inside Joke Energy:
+      100%
+
+    </div>
+
+  </div>
+
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
+  <script src="script.js"></script>
+
+</body>
+
 </html>
+

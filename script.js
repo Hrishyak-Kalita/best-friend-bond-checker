@@ -1,12 +1,53 @@
 
 /* =========================
+   IMAGE PREVIEW
+========================= */
+
+let photo1URL = "";
+let photo2URL = "";
+
+document.getElementById("photo1").addEventListener("change", (e) => {
+
+  const file = e.target.files[0];
+
+  if (file) {
+
+    photo1URL = URL.createObjectURL(file);
+
+    document.getElementById("preview1").src = photo1URL;
+
+    document.getElementById("uploadText1").innerText =
+      "Energy Added ✨";
+
+  }
+
+});
+
+document.getElementById("photo2").addEventListener("change", (e) => {
+
+  const file = e.target.files[0];
+
+  if (file) {
+
+    photo2URL = URL.createObjectURL(file);
+
+    document.getElementById("preview2").src = photo2URL;
+
+    document.getElementById("uploadText2").innerText =
+      "Vibe Captured 💫";
+
+  }
+
+});
+
+/* =========================
    STARS
 ========================= */
 
 const starsContainer =
 document.getElementById("stars");
 
-for(let i=0;i<80;i++){
+for(let i = 0; i < 90; i++){
 
   const star =
   document.createElement("div");
@@ -14,15 +55,16 @@ for(let i=0;i<80;i++){
   star.classList.add("star");
 
   star.style.left =
-  Math.random()*100 + "%";
+  Math.random() * 100 + "%";
 
   star.style.top =
-  Math.random()*100 + "%";
+  Math.random() * 100 + "%";
 
   star.style.animationDelay =
-  Math.random()*5 + "s";
+  Math.random() * 5 + "s";
 
   starsContainer.appendChild(star);
+
 }
 
 /* =========================
@@ -67,48 +109,83 @@ document.addEventListener("mousemove",(e)=>{
 });
 
 /* =========================
-   RESPONSES
+   FRIENDSHIP TYPES
 ========================= */
 
-const responses = [
+const friendshipTypes = [
 
-"⚠️ SYSTEM OVERLOAD: Too much friendship energy detected.",
+  "Late Night Comfort Duo 🌙",
 
-"♾️ Bond level expanding beyond infinity...",
+  "Golden Retriever Energy 🐶",
 
-"💖 Friendship stronger than emotional damage.",
+  "Forever Safe Space 💖",
 
-"😂 Built entirely on memes & inside jokes.",
+  "Chaotic But Caring ✨",
 
-"🫂 Emotional support humans detected.",
+  "Inside Joke Specialists 😂",
 
-"🚀 This bond survived dry replies & mood swings.",
+  "Soft Souls Connection ☁️",
 
-"🌌 Cosmic friendship unlocked successfully.",
+  "Long Talks & Deep Trust 💫",
 
-"💌 Basically siblings chosen by destiny.",
+  "Main Character Besties 🎬",
 
-"🔥 Legendary duo energy detected.",
+  "Always There Energy 🫂",
 
-"✨ Rare soulmate-level friendship found."
-
-];
-
-const auras = [
-
-"🌌 Cosmic Duo",
-"💀 Chaos Partners",
-"🫂 Soul Sync",
-"🔥 Emotional Damage Survivors",
-"✨ Legendary Besties",
-"🚀 Meme Lords",
-"💖 Infinity Souls",
-"🌙 Midnight Therapy Team"
+  "Childhood Memory Vibes 🪁"
 
 ];
 
 /* =========================
-   SCORE GENERATOR
+   SMART RESULT
+========================= */
+
+function getResultMessage(score){
+
+  if(score >= 96){
+
+    return `
+    Some friendships naturally become a safe place.
+
+    The connection here feels effortless,
+    comforting,
+    and genuinely rare 💖
+    `;
+
+  }
+
+  if(score >= 90){
+
+    return `
+    This friendship feels warm,
+    emotionally balanced,
+    and full of memories that quietly matter ✨
+    `;
+
+  }
+
+  if(score >= 84){
+
+    return `
+    A beautiful friendship with fun energy,
+    emotional comfort,
+    and the kind of vibe that lasts 💫
+    `;
+
+  }
+
+  return `
+  A chaotic but lovable friendship 😂
+
+  Built on random conversations,
+  shared humour,
+  and being there when it matters 💖
+  `;
+
+}
+
+/* =========================
+   SCORE
 ========================= */
 
 function generateBond(name1,name2){
@@ -118,14 +195,36 @@ function generateBond(name1,name2){
   const combined =
   (name1 + name2).toLowerCase();
 
-  for(let i=0;i<combined.length;i++){
+  for(let i = 0; i < combined.length; i++){
 
     total +=
     combined.charCodeAt(i);
 
   }
 
-  return (total % 31) + 70;
+  let score =
+  (total % 21) + 78;
+
+  if(
+
+    name1[0]?.toLowerCase() ===
+
+    name2[0]?.toLowerCase()
+
+  ){
+
+    score += 3;
+
+  }
+
+  if(score > 98){
+
+    score = 98;
+
+  }
+
+  return score;
+
 }
 
 /* =========================
@@ -135,7 +234,7 @@ function generateBond(name1,name2){
 function createEmoji(){
 
   const emojis =
-  ["💖","✨","🌌","😂","♾️"];
+  ["💖","✨","🌙","🫂","😂"];
 
   const emoji =
   document.createElement("div");
@@ -157,6 +256,7 @@ function createEmoji(){
     emoji.remove();
 
   },3000);
+
 }
 
 /* =========================
@@ -168,6 +268,7 @@ function updateOnlineUsers(){
   document.getElementById(
     "onlineUsers"
   ).innerText =
+
   Math.floor(Math.random()*20)+8;
 
 }
@@ -199,10 +300,6 @@ async function updateVisitorCount(){
 
     console.log(error);
 
-    document.getElementById(
-      "visitCount"
-    ).innerText = "0";
-
   }
 
 }
@@ -210,10 +307,10 @@ async function updateVisitorCount(){
 updateVisitorCount();
 
 /* =========================
-   MAIN FUNCTION
+   MAIN
 ========================= */
 
-function checkBond(){
+async function checkBond(){
 
   const name1 =
   document.getElementById("name1")
@@ -234,70 +331,132 @@ function checkBond(){
   const progressBar =
   document.getElementById("progressBar");
 
+  const button =
+  document.querySelector(".main-btn");
+
+  /* =========================
+     VALIDATION
+  ========================= */
+
   if(name1 === "" || name2 === ""){
 
+    result.classList.add("show");
+
+    result.scrollIntoView({
+
+      behavior:"smooth",
+
+      block:"start"
+
+    });
+
     result.querySelector(".result-text").innerHTML =
-    "🥺 Please enter both names first.";
+
+    "🥺 Add both names to discover your friendship vibe.";
 
     return;
+
   }
 
-  result.classList.add("loading");
+  /* =========================
+     SHOW RESULT SECTION
+  ========================= */
 
-  percentageText.innerHTML = "⌛";
+  result.classList.add("show");
+
+  result.scrollIntoView({
+
+    behavior:"smooth",
+
+    block:"start"
+
+  });
+
+  /* =========================
+     BUTTON LOADING
+  ========================= */
+
+  button.innerHTML =
+  "Syncing Your Vibe... ✨";
+
+  button.disabled = true;
+
+  /* =========================
+     RESET UI
+  ========================= */
+
+  percentageText.innerHTML =
+  "⌛";
+
+  progressBar.style.strokeDashoffset =
+  408;
+
+  /* =========================
+     LOADING UI
+  ========================= */
 
   result.querySelector(".result-text").innerHTML = `
 
-    ✨ Analyzing friendship memories...<br>
+    ✨ Syncing friendship energy...<br><br>
 
-    📂 Scanning emotional damage...<br>
+    💭 Reading your connection vibe...<br><br>
 
-    💀 Detecting meme compatibility...<br>
+    🌙 Finding your friendship aura...<br><br>
 
-    ♾️ Calculating infinity levels...
+    💖 Creating your bond story...
 
   `;
 
-  setTimeout(()=>{
+  /* =========================
+     RESULT DELAY
+  ========================= */
 
-    result.classList.remove("loading");
+  setTimeout(async()=>{
 
     const percentage =
     generateBond(name1,name2);
 
-    /* SAVE TO REDIS */
+    try{
 
-    fetch("/api/count",{
+      await fetch("/api/count",{
 
-      method:"POST",
+        method:"POST",
 
-      headers:{
-        "Content-Type":"application/json"
-      },
+        headers:{
+          "Content-Type":"application/json"
+        },
 
-      body:JSON.stringify({
+        body:JSON.stringify({
 
-        name1,
-        name2,
-        score:percentage
+          name1,
+          name2,
+          score:percentage
 
-      })
+        })
 
-    });
+      });
 
-    const response =
-    responses[
+    }catch(error){
+
+      console.log(error);
+
+    }
+
+    const friendshipType =
+
+    friendshipTypes[
       Math.floor(
-        Math.random()*responses.length
+        Math.random() *
+        friendshipTypes.length
       )
     ];
 
-    const aura =
-    auras[
-      Math.floor(
-        Math.random()*auras.length
-      )
-    ];
+    const resultMessage =
+    getResultMessage(percentage);
+
+    /* =========================
+       PERCENTAGE UI
+    ========================= */
 
     percentageText.innerHTML =
     `${percentage}%`;
@@ -308,39 +467,162 @@ function checkBond(){
     2 * Math.PI * radius;
 
     const offset =
-    circumference -
-    (percentage / 100) * circumference;
+
+      circumference -
+
+      (percentage / 100) *
+
+      circumference;
 
     progressBar.style.strokeDashoffset =
     offset;
 
+    /* =========================
+       DYNAMIC BACKGROUND
+    ========================= */
+
+    if(percentage >= 95){
+
+      document.body.style.background =
+
+      `
+
+      radial-gradient(circle at top left,#ff00aa33,transparent 30%),
+
+      radial-gradient(circle at bottom right,#00d4ff33,transparent 30%),
+
+      linear-gradient(135deg,#120018,#0f172a,#000)
+
+      `;
+
+    }else if(percentage >= 88){
+
+      document.body.style.background =
+
+      `
+
+      radial-gradient(circle at top left,#7c3aed33,transparent 30%),
+
+      radial-gradient(circle at bottom right,#06b6d433,transparent 30%),
+
+      linear-gradient(135deg,#0f172a,#020617,#000)
+
+      `;
+
+    }else{
+
+      document.body.style.background =
+
+      `
+
+      radial-gradient(circle at top left,#33415533,transparent 30%),
+
+      radial-gradient(circle at bottom right,#06b6d422,transparent 30%),
+
+      linear-gradient(135deg,#111827,#020617,#000)
+
+      `;
+
+    }
+
+    /* =========================
+       RESULT UI
+    ========================= */
+
     result.querySelector(".result-text").innerHTML = `
 
-      <div class="aura">
-        ${aura}
+      <div class="friendship-badge">
+
+        ${friendshipType}
+
       </div>
 
-      <strong>${name1}</strong>
-      ✨
-      <strong>${name2}</strong>
+      <div class="bond-quote">
 
-      <br><br>
+        "${resultMessage}"
 
-      ${response}
+      </div>
+
+      <div class="mini-divider"></div>
+
+      <div class="memory-line">
+
+        💫 Some people quietly become
+        a part of your comfort,
+        your chaos,
+        and your favorite memories.
+
+      </div>
 
       <div class="stats">
 
-        💫 999+ inside jokes <br>
+        💬 Comfort Level:
+        ${Math.floor(percentage-5)}%
 
-        🌙 100% late-night therapy sessions <br>
+        <br><br>
 
-        😂 Unlimited roasting compatibility
+        🌙 Emotional Sync:
+        ${Math.floor(percentage-2)}%
+
+        <br><br>
+
+        😂 Inside Joke Energy:
+        100%
 
       </div>
 
     `;
 
-    for(let i=0;i<18;i++){
+    /* =========================
+       STORY CARD UPDATE
+    ========================= */
+
+    document.getElementById(
+      "storyImg1"
+    ).src = photo1URL;
+
+    document.getElementById(
+      "storyImg2"
+    ).src = photo2URL;
+
+    document.getElementById(
+      "storyScore"
+    ).innerText =
+    `${percentage}%`;
+
+    document.getElementById(
+      "storyType"
+    ).innerText =
+    friendshipType;
+
+    document.getElementById(
+      "storyQuote"
+    ).innerText =
+    resultMessage;
+
+    document.getElementById(
+      "storyComfort"
+    ).innerText =
+    `${Math.floor(percentage-5)}%`;
+
+    document.getElementById(
+      "storySync"
+    ).innerText =
+    `${Math.floor(percentage-2)}%`;
+
+    /* =========================
+       SHOW SHARE BUTTON
+    ========================= */
+
+    document.getElementById(
+      "shareActions"
+    ).classList.add("show");
+
+    /* =========================
+       FLOATING EMOJIS
+    ========================= */
+
+    for(let i = 0; i < 18; i++){
 
       setTimeout(()=>{
 
@@ -350,53 +632,64 @@ function checkBond(){
 
     }
 
-    /* DYNAMIC BACKGROUND */
+    /* =========================
+       RESTORE BUTTON
+    ========================= */
 
-    if(percentage >= 95){
+    button.innerHTML =
+    "Sync Our Bond ✨";
 
-      document.body.style.background =
-      "linear-gradient(135deg,#ff0080,#7928ca,#00d4ff)";
+    button.disabled = false;
 
-    }else if(percentage >= 85){
-
-      document.body.style.background =
-      "linear-gradient(135deg,#7c4dff,#00d4ff,#111827)";
-
-    }else{
-
-      document.body.style.background =
-      "linear-gradient(135deg,#111827,#0f172a,#070710)";
-    }
-
-  },2500);
+  },2200);
 
 }
 
 /* =========================
-   SHARE / SAVE RESULT
+   SHARE RESULT
 ========================= */
 
 async function saveResult(){
 
+  const storyCard =
+  document.getElementById("storyCard");
+
   const canvas =
-  await html2canvas(
-    document.querySelector(".card")
-  );
+  await html2canvas(storyCard,{
+
+    scale:2,
+
+    useCORS:true,
+
+    backgroundColor:null
+
+  });
 
   canvas.toBlob(async(blob)=>{
 
     const file =
     new File(
+
       [blob],
-      "bondsync-result.png",
-      { type:"image/png" }
+
+      "bondsync-story.png",
+
+      {
+        type:"image/png"
+      }
+
     );
 
     if(
-      navigator.canShare &&
+
+      navigator.share &&
+
       navigator.canShare({
+
         files:[file]
+
       })
+
     ){
 
       try{
@@ -405,8 +698,7 @@ async function saveResult(){
 
           title:"bond.sync ✨",
 
-          text:
-          "Our friendship bond broke reality ♾️",
+          text:"Our friendship vibe 💖",
 
           files:[file]
 
@@ -415,6 +707,7 @@ async function saveResult(){
       }catch(error){
 
         console.log(error);
+
       }
 
     }else{
@@ -423,15 +716,15 @@ async function saveResult(){
       document.createElement("a");
 
       link.download =
-      "bondsync-result.png";
+      "bondsync-story.png";
 
       link.href =
       URL.createObjectURL(blob);
 
       link.click();
+
     }
 
   });
 
 }
-
