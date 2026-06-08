@@ -1,0 +1,13 @@
+{
+  "name": "bestfriendfun",
+  "version": "1.0.0",
+  "description": "Best Friend Bond Checker",
+  "main": "script.js",
+  "type": "module",
+  "scripts": {
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "@vercel/kv": "^3.0.0"
+  }
+}

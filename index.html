@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Infinity Bond Checker ✨</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+</head>
+
+<body>
+
+  <!-- STARS -->
+  <div class="stars" id="stars"></div>
+
+  <!-- GLOW ORBS -->
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+
+  <!-- CURSOR -->
+  <div class="cursor" id="cursor"></div>
+
+  <!-- MAIN CARD -->
+  <div class="card" id="card">
+
+    <h1>💖 Bond Checker</h1>
+
+    <p class="subtitle">
+      Some friendships are too powerful for reality to process ✨
+    </p>
+
+    <div class="input-box">
+      <input
+        type="text"
+        id="name1"
+        placeholder="Enter First Name"
+      >
+    </div>
+
+    <div class="input-box">
+      <input
+        type="text"
+        id="name2"
+        placeholder="Enter Best Friend Name"
+      >
+    </div>
+
+    <button onclick="checkBond()">
+      Analyze Friendship Energy ✨
+    </button>
+
+    <!-- RESULT -->
+    <div class="result" id="result">
+      Your friendship aura will appear here 💫
+    </div>
+
+    <!-- VISIT COUNT -->
+    <div class="visit-box">
+      👀 Visitors:
+      <span id="visitCount">0</span>
+    </div>
+
+    <div class="footer">
+      Happy Best Friend Day 🌸
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>
+
